@@ -192,6 +192,10 @@ class Downloader:
         info.filename = page.filename
         info.url = page.url
 
+        with open(f"{page.filename}.cmd", "w") as batfile:
+            """for restart"""
+            batfile.write(f'python ulozto-downloader.py --url "{page.url}"')
+
         if page.quickDownloadURL is not None:
             self.log("You are VERY lucky, this is QUICK direct download without CAPTCHA, downloading as 1 quick part :)")
             info.download_type = "fullspeed direct download (without CAPTCHA)"
@@ -318,3 +322,19 @@ class Downloader:
             sys.exit(1)
 
         self.log("All downloads successfully finished", level=LogLevel.SUCCESS)
+
+        while True:
+            try:
+                if target_dir:
+                    if not os.path.exists(f"{target_dir}/done"):
+                        os.makedirs(f"{target_dir}/done")
+                    os.rename(f"{target_dir}/{page.filename}", f"{target_dir}/done/{page.filename}")
+                    break
+                else:
+                    if not os.path.exists("done"):
+                        os.makedirs("done")
+                    os.rename(f"{page.filename}", f"done/{page.filename}")
+                    break
+            except Exception as e:
+                print(e)
+                time.sleep(3)

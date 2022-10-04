@@ -278,7 +278,7 @@ class Page:
                     captcha_image_url = urljoin("https:", captcha_image_url)
 
                     solver.log("Image URL obtained, trying to solve")
-                    captcha_answer = solver.solve(captcha_image_url, stop_event)
+                    captcha_answer = solver.solve(captcha_image_url, stop_event, filename=self.filename)
 
                     captcha_data["captcha_value"] = captcha_answer
 

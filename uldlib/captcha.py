@@ -24,7 +24,7 @@ class CaptchaSolver():
         self.frontend.captcha_stats(stats)
 
     @abstractmethod
-    def solve(self, img_url: str, stop_event: threading.Event = None) -> str:
+    def solve(self, img_url: str, stop_event: threading.Event = None, filename="") -> str:
         pass
 
 
@@ -45,13 +45,13 @@ class ManualInput(CaptchaSolver):
     def __init__(self, frontend):
         super().__init__(frontend)
 
-    def solve(self, img_url: str, stop_event: threading.Event = None) -> str:
+    def solve(self, img_url: str, stop_event: threading.Event = None, filename="") -> str:
         import tkinter as tk
         from PIL import ImageTk
 
         root = tk.Tk()
         root.focus_force()
-        root.title("Opiš kód z obrázku")
+        root.title(f"Opiš kód pro {filename}")
         # use width x height + x_offset + y_offset (no spaces!)
         root.geometry("300x140")
 

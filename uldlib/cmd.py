@@ -15,7 +15,7 @@ def run():
         description='Download file from Uloz.to using multiple parallel downloads.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument('url', metavar='URL', type=str,
+    parser.add_argument('--url', metavar='URL', type=str, default="",
                         help="URL from Uloz.to (tip: enter in 'quotes' because the URL contains ! sign)")
     parser.add_argument('--parts', metavar='N', type=int, default=20,
                         help='Number of parts that will be downloaded in parallel')
@@ -29,7 +29,13 @@ def run():
                         help='Set connection timeout for TOR sessions in seconds')
     parser.add_argument('--version', action='version', version=__version__)
 
+
     args = parser.parse_args()
+
+    if not args.url:
+        url = input("insert url: ")
+    else:
+        url = args.url
 
     # TODO: implement other frontends and allow to choose from them
     frontend = ConsoleFrontend()
@@ -71,7 +77,7 @@ def run():
     # enables ansi escape characters in terminal on Windows
     if os.name == 'nt':
         os.system("")
-        
+
     d = downloader.Downloader(frontend, solver)
 
     # Register sigint handler
@@ -84,5 +90,5 @@ def run():
 
     signal.signal(signal.SIGINT, sigint_handler)
 
-    d.download(args.url, args.parts, args.output, args.conn_timeout)
+    d.download(url, 3, "", 5)
     d.terminate()
