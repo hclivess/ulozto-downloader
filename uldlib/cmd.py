@@ -17,7 +17,7 @@ def run():
     )
     parser.add_argument('--url', metavar='URL', type=str, default="",
                         help="URL from Uloz.to (tip: enter in 'quotes' because the URL contains ! sign)")
-    parser.add_argument('--parts', metavar='N', type=int, default=20,
+    parser.add_argument('--parts', metavar='N', type=int, default=7,
                         help='Number of parts that will be downloaded in parallel')
     parser.add_argument('--output', metavar='DIRECTORY',
                         type=str, default="./", help='Target directory')
@@ -90,5 +90,5 @@ def run():
 
     signal.signal(signal.SIGINT, sigint_handler)
 
-    d.download(url, 3, "", 5)
+    d.download(url, args.parts, "", 5)
     d.terminate()
