@@ -323,6 +323,8 @@ class Downloader:
 
         self.log("All downloads successfully finished", level=LogLevel.SUCCESS)
 
+        os.remove(f"{page.filename}.cmd")
+
         while True:
             try:
                 if target_dir:
@@ -334,6 +336,7 @@ class Downloader:
                     if not os.path.exists("done"):
                         os.makedirs("done")
                     os.rename(f"{page.filename}", f"done/{page.filename}")
+
                     break
             except Exception as e:
                 print(e)
