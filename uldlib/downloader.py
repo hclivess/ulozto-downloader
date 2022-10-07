@@ -322,22 +322,5 @@ class Downloader:
             sys.exit(1)
 
         self.log("All downloads successfully finished", level=LogLevel.SUCCESS)
+        return page
 
-        os.remove(f"{page.filename}.cmd")
-
-        while True:
-            try:
-                if target_dir:
-                    if not os.path.exists(f"{target_dir}/done"):
-                        os.makedirs(f"{target_dir}/done")
-                    os.rename(f"{target_dir}/{page.filename}", f"{target_dir}/done/{page.filename}")
-                    break
-                else:
-                    if not os.path.exists("done"):
-                        os.makedirs("done")
-                    os.rename(f"{page.filename}", f"done/{page.filename}")
-
-                    break
-            except Exception as e:
-                print(e)
-                time.sleep(3)

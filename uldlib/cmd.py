@@ -90,5 +90,13 @@ def run():
 
     signal.signal(signal.SIGINT, sigint_handler)
 
-    d.download(url, args.parts, "", 5)
+    page = d.download(url, args.parts, "", 5)
     d.terminate()
+
+    if not os.path.exists("done"):
+        os.makedirs("done")
+    os.remove(f"{page.filename}.cmd")
+    os.rename(f"{page.filename}", f"done/{page.filename}")
+
+
+
