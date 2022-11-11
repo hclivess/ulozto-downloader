@@ -132,7 +132,7 @@ class AutoReadCaptcha(CaptchaSolver):
         model_content = open(model_path, "rb").read()
         self.interpreter = tflite.Interpreter(model_content=model_content)
 
-    def solve(self, img_url, stop_event=None) -> str:
+    def solve(self, img_url, stop_event=None, filename="") -> str:
         # stop_event not used, because tflite interpreter is hard to cancel (but is is quick)
         import numpy as np
 
